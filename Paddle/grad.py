@@ -1,16 +1,16 @@
 # Paddle api 之 fluid.dygraph.grad
-import paddle.fluid as fluid
+import paddle
 
 # fluid.dygraph.grad 是 Paddle 动态图下获取反向传播梯度的 API
 
 # 拆解with语句，方便交互式展示
-with_dygraph_guard = fluid.dygraph.guard()
+with_dygraph_guard = paddle.fluid.dygraph.guard()
 
 # 进入with fluid.dygraph.guard()
 with_dygraph_guard.__enter__()
 
 # 创建一个 shape为(1)值为1的张量
-x = fluid.layers.ones(shape=[1], dtype='float32')
+x = paddle.fluid.layers.ones(shape=[1], dtype='float32')
 
 # 允许该张量反传梯度
 x.stop_gradient = False
@@ -19,12 +19,12 @@ x.stop_gradient = False
 y = x * x
 
 # dx等于y对x求导数，dx = 2*x
-dx_create_True = fluid.dygraph.grad(outputs=[y], # 接受输出outputs
-                                    inputs=[x], # 接受输入inputs
-                                    # create graph 属性表示是否创建计算过程中的反向图，若值为False，则计算过程中的反向图会释放
-                                    create_graph=True, 
-                                    # retain_graph 属性表示是否保留计算梯度的前向图。如果保留则可对同一张图求两次反向
-                                    retain_graph=True)[0]
+dx_create_True = paddle.fluid.dygraph.grad(outputs=[y], # 接受输出outputs
+                                           inputs=[x], # 接受输入inputs
+                                           # create graph 属性表示是否创建计算过程中的反向图，若值为False，则计算过程中的反向图会释放
+                                           create_graph=True, 
+                                           # retain_graph 属性表示是否保留计算梯度的前向图。如果保留则可对同一张图求两次反向
+                                           retain_graph=True)[0]
 
 # 计算 z = y + dx
 z = y + dx_create_True
@@ -41,7 +41,7 @@ x.gradient()
 # 下面我们看下 create_graph = False 的情况
 
 # 创建一个 shape为(1)值为1的张量
-x_2 = fluid.layers.ones(shape=[1], dtype='float32')
+x_2 = paddle.fluid.layers.ones(shape=[1], dtype='float32')
 
 # 允许该张量反传梯度
 x_2.stop_gradient = False
@@ -49,10 +49,10 @@ x_2.stop_gradient = False
 # 计算 y_2 = x_2*x_2
 y_2 = x_2 * x_2
 
-dx_create_False = fluid.dygraph.grad(outputs=[y_2], 
-                                     inputs=[x_2], 
-                                     create_graph=False, 
-                                     retain_graph=True)[0]
+dx_create_False = paddle.fluid.dygraph.grad(outputs=[y_2], 
+                                            inputs=[x_2], 
+                                            create_graph=False, 
+                                            retain_graph=True)[0]
 
 # 计算 z_2 = y + dx_create_False
 z_2 = y_2 + dx_create_False
