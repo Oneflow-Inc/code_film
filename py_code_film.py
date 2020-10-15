@@ -49,27 +49,34 @@ def stderr_reader(pipe, queue):
         with pipe:
             for char in iter(lambda: pipe.read(1), b''):
                 word = char
+                eof = False
                 if char == b'>':
-                    maybe_prompt = pipe.read(2)
-                    if maybe_prompt == b'':
-                        break
-                    elif maybe_prompt == b'>>':
-                        CondNotify(global_cond)
-                    else:
-                        # do nothing
-                        pass
+                    maybe_prompt = pipe.read(1)
                     word += maybe_prompt
+                    if maybe_prompt == b'':
+                        eof = True
+                    elif maybe_prompt == b'>':
+                        maybe_prompt = pipe.read(1)
+                        word += maybe_prompt
+                        if maybe_prompt == b'':
+                            eof = True
+                        elif maybe_prompt == b'>':
+                            CondNotify(global_cond)
                 elif char == b'.':
-                    maybe_prompt = pipe.read(2)
-                    if maybe_prompt == b'':
-                        break
-                    elif maybe_prompt == b'..':
-                        CondNotify(global_cond)
-                    else:
-                        # do nothing
-                        pass
+                    maybe_prompt = pipe.read(1)
                     word += maybe_prompt
+                    if maybe_prompt == b'':
+                        eof = True
+                    elif maybe_prompt == b'.':
+                        maybe_prompt = pipe.read(1)
+                        word += maybe_prompt
+                        if maybe_prompt == b'':
+                            eof = True
+                        elif maybe_prompt == b'.':
+                            CondNotify(global_cond)
                 queue.put(("output", 0, word))
+                if eof:
+                    break
     finally:
         queue.put(None)
 
