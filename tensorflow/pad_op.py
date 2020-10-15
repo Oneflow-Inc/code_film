@@ -16,6 +16,7 @@ paddings[1] # 表示左右pad各2个像素
 # tensorflow pad op 提供 3 种 padding 模式, "CONSTANT", "REFLECT" 和 "SYMMETRIC"
 
 # "CONSTANT" 模式表示在边缘处补0
+
 constant_padded = tensorflow.pad(origin_tensor, paddings, "CONSTANT")
 constant_padded # "CONSTANT" pad 结果
 
@@ -24,6 +25,7 @@ constant_padded[0, :], constant_padded[-1, :] # 上下是全0
 constant_padded[:, 0:2], constant_padded[:, -2:] # 左右也是全0
 
 # "REFLECT" 模式表示以原图像边缘一圈像素为对称中心, pad 的内容与除去边缘的图像内容呈镜像关系
+
 reflect_paded = tensorflow.pad(origin_tensor, paddings, "REFLECT")
 reflect_paded # "REFLECT" pad 结果
 
@@ -36,6 +38,7 @@ reflect_paded[:, 0:2], reflect_paded[:, 3:5] # 结果第0和1列 与 第3和4列
 reflect_paded[:, -2:], reflect_paded[:, 2:4] # 结果第5和6列 与 第2和3列 呈镜像关系
 
 # "SYMMETRIC" 模式与 "REFLECT" 类似, 区别在于是直接复制边界处的像素然后做镜像填充
+
 symmetric_paded = tensorflow.pad(origin_tensor, paddings, "SYMMETRIC")
 symmetric_paded # "SYMMETRIC" pad 结果
 
