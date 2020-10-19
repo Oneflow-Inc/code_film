@@ -6,7 +6,7 @@ import paddle.fluid.dygraph
 # 拆解with语句，方便交互式展示
 with_dygraph_guard = paddle.fluid.dygraph.guard()
 
-# # 进入动态图上下文
+# 进入动态图上下文（这么写是为了方便交互式呈现，原本代码是`with paddle.fluid.dygraph.guard():`）
 with_dygraph_guard.__enter__()
 
 # 创建一个 shape为(1)值为1的张量
@@ -15,8 +15,9 @@ x = paddle.fluid.layers.ones(shape=[1], dtype='float32')
 # 允许该张量反传梯度
 x.stop_gradient = False
 
+with_no_grad = paddle.fluid.dygraph.no_grad()
 # 进入no_grad上下文内， 在作用域内的计算结果, 对应变量的stop_gradient = True
-paddle.fluid.dygraph.no_grad().__enter__()
+with_no_grad.__enter__()
 
 # 计算 y = x*x 
 y = x * x 
@@ -25,7 +26,7 @@ y = x * x
 y.stop_gradient
 
 # 退出no_grad上下文
-paddle.fluid.dygraph.no_grad().__exit__(StopIteration, None, None)
+with_no_grad.__exit__(StopIteration, None, None)
 
 # 张量y进行反向传播
 y.backward()
