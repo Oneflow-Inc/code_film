@@ -2,6 +2,7 @@
 
 import paddle.fluid.dygraph
 
+
 # 拆解with语句，方便交互式展示
 with_dygraph_guard = paddle.fluid.dygraph.guard()
 
