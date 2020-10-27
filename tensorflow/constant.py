@@ -1,5 +1,9 @@
 # tensorflow v2 api 之 tf.constant
 
+import os
+
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+
 import tensorflow
 
 import numpy
