@@ -52,3 +52,11 @@ tensor.dtype # 不能完成从浮点数到int32的转换，判定为不可行，
 
 tensor = tensorflow.convert_to_tensor([5.1, 4.1, 3.5, 3.4], dtype=tensorflow.int8)
 
+# 将 scalar 类型转换为 Tensor
+
+tensor = tensorflow.convert_to_tensor(5.7)
+
+tensor.dtype  # 数据类型推断为 float32
+
+tensor.shape # 默认创建只用一个元素的 0 维张量
+
