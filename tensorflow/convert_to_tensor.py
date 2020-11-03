@@ -29,7 +29,7 @@ tensor = tensorflow.convert_to_tensor([1, 2, 3, 4], dtype=tensorflow.float32)
 
 tensor.dtype  # 数据类型使用指定的float32类型
 
-# API调用者也不是很明确自己想创建的 Tensor 是什么类型，以提示的形式给出一个类似的偏好设置
+# 如果API调用者也不是很明确自己想创建的 Tensor 是什么类型，可以用提示的形式给出一个偏好设置
 # 注意：当同时设置dtype和dtype_hint，会忽略 dtype_hint 参数
 
 tensor = tensorflow.convert_to_tensor([1, 2, 3, 4], dtype_hint=tensorflow.float32)  
@@ -58,5 +58,5 @@ tensor = tensorflow.convert_to_tensor(5.7)
 
 tensor.dtype  # 数据类型推断为 float32
 
-tensor.shape # 默认创建只用一个元素的 0 维张量
+tensor.shape # 默认创建只有一个元素的 0 维张量
 
