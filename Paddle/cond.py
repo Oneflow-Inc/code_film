@@ -2,17 +2,17 @@
 
 import paddle 
 
-import numpy as np 
+import numpy
 
 # 简单创建两个array
 
 # 创建一个值为1的array
 
-a = np.array([1]).astype(np.float32)
+a = numpy.array([1]).astype(numpy.float32)
 
 # 创建一个值为2的array
 
-b = np.array([2]).astype(np.float32)
+b = numpy.array([2]).astype(numpy.float32)
 
 # 拆解with语句，方便交互式展示
 
