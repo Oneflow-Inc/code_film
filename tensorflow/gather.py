@@ -10,7 +10,7 @@ import tensorflow
 
 # 1. 如果输入的 indices 参数为标量
 
-# 输入一个二维的 Tensor
+# 首先，输入一个二维的 Tensor
 
 tensor = tensorflow.constant([[0, 1], [2, 3], [4, 5]])
 
@@ -22,7 +22,7 @@ result.shape  # 只保留第二行元素，故切片后的形状为[2]
 
 result  # 切片后保留第二行元素为，[2, 3]
 
-# 如果手动指定 axis 参数，则按列取切片
+# 如果手动指定 axis 参数为1，按列取切片
 
 result = tensorflow.gather(tensor, indices=1, axis=1)
 
@@ -32,11 +32,11 @@ result # 切片后保留第二列元素为，[1, 3, 5]
 
 # 2. 如果输入的 indices 参数为一维 Tensor
 
-# 输入一个二维的 Tensor
+# 首先，输入一个二维的 Tensor
 
 tensor = tensorflow.constant([[0, 1], [2, 3], [4, 5]])
 
-# 输入一个一维的切片下标
+# 输入一个一维的切片下标 indices
 
 indices = [0, 1]
 
@@ -46,13 +46,15 @@ result = tensorflow.gather(tensor, indices)
 
 result.shape  # 只保留第一行和第二行的元素，故切片后的形状为[2, 2]
 
-# 3. 如果输入的 indices 参数为二维 Tensor 
+result  # 输出结果为 [[0, 1], [2, 3]]
 
-# 输入一个二维的 Tensor
+# 3. 如果输入的 indices 参数为高维 Tensor 
+
+# 首先，输入一个二维的 Tensor
 
 tensor = tensorflow.constant([[0, 1], [2, 3], [4, 5]])
 
-# 输入一个高维的切片下标
+# 输入一个二维的切片下标 indices
 
 indices = tensorflow.constant([[0, 1], [0, 1]])
 
@@ -82,7 +84,7 @@ batch_dims = 1  # 如果有一个 batch 维
 
 axis = 1
 
-# 首先需要保证，tensor.shape[:batch_dims] = indices.shape[:batch_dims]
+# 首先需要保证，tensor.shape[:batch_dims] = indices.shape[:batch_dims]，batch 维数据的维度不应被改变
 
 tensor.shape[:batch_dims]  # [3]
 
@@ -90,13 +92,13 @@ indices.shape[:batch_dims] # [2]
 
 result = tensorflow.gather(tensor, indices, batch_dims=1)  # 报错
 
-# 调整 indices，为
+# 调整 indices，使得其形状变为 3 * 2
 
 indices = tensorflow.constant([[0, 1], [1, 0], [0, 1]])
 
 tensor # 复习输入 tensor 的值为
 
-result = tensorflow.gather(tensor, indices, axis=axis, batch_dims=batch_dims) # 重新获取，按列做切片
+result = tensorflow.gather(tensor, indices, axis=axis, batch_dims=batch_dims) # axis 为 1，batch_dims 为 1，重新获取切片
 
 tensor.shape[:axis] # [3] 
 
