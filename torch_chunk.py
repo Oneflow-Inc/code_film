@@ -1,7 +1,7 @@
 # Pytorch 算子介绍：torch.chunk
 # https://pytorch.org/docs/stable/generated/torch.chunk.html
 
-#导入必要的库
+# 导入必要的库
 import torch
 import numpy as np
 
